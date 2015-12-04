@@ -1,5 +1,5 @@
-# odoo-docker
-Docker files to build dockers based on:
-* standard Odoo code
-* OCB code
-* Specific Chinese setup (mostly to remove specific Google references blocked in China and replace them with Chinese mirror)
+# odoo-docker-china
+Docker files to build dockers with specific setup for China:
+* Based on OCA/OCB
+* No link to Google content
+* Based on Chinese mirror
