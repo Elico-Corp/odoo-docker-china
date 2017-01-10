@@ -1,4 +1,4 @@
-FROM elicocorp/odoo:9.0
+FROM elicocorp/odoo:8.0
 MAINTAINER Elico Corp <contact@elico-corp.com>
 
 # CN fonts
@@ -17,4 +17,6 @@ RUN mkdir -p ~/pip && \
   echo "index-url = http://mirrors.aliyun.com/pypi/simple" >> ~/pip/pip.conf
 
 # Google links CN mirror
-RUN sed -i "s/fonts\.googleapis\.com/fonts.lug.ustc.edu.cn/g" `grep 'fonts\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
+# Also replace "http://" with "//" to fix mixed-content issue on HTTPS pages
+RUN sed -i "s/http:\/\/fonts\.googleapis\.com/\/\/fonts.lug.ustc.edu.cn/g" `grep 'fonts\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
+RUN sed -i "s/http:\/\/ajax\.googleapis\.com/\/\/ajax.lug.ustc.edu.cn/g" `grep 'ajax\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
