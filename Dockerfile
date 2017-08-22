@@ -1,6 +1,13 @@
 FROM elicocorp/odoo:10.0
 MAINTAINER Elico Corp <contact@elico-corp.com>
 
+# Set OS timezone to China
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# Set Odoo timezone to China (will be set at startup thanks to Odoo
+# parameter substitution)
+ENV ODOO_TIMEZONE=Asia/Shanghai
+
 # CN fonts
 RUN apt-get update && \
   apt-get -y install ttf-wqy-zenhei
