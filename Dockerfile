@@ -1,5 +1,5 @@
 FROM elicocorp/odoo:7.0
-MAINTAINER Elico Corp <contact@elico-corp.com>
+MAINTAINER Elico Corp <webmaster@elico-corp.com>
 
 # Set OS timezone to China
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
