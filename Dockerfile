@@ -1,5 +1,12 @@
 FROM elicocorp/odoo:8.0
-MAINTAINER Elico Corp <contact@elico-corp.com>
+MAINTAINER Elico Corp <webmaster@elico-corp.com>
+
+# Set OS timezone to China
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# Set Odoo timezone to China (will be set at startup thanks to Odoo
+# parameter substitution)
+ENV ODOO_TIMEZONE=Asia/Shanghai
 
 # CN fonts
 RUN apt-get update && \
@@ -7,8 +14,10 @@ RUN apt-get update && \
 
 # Ubuntu CN mirror
 # 2 reasons to set the mirror after apt-get update:
-#  1) Docker Hub takes more than 15 minutes to fetch the packages list since the mirror server is in China
-#  2) apt repository format is subject to race conditions when a mirror is updated (http://askubuntu.com/a/160179)
+#  1) Docker Hub takes more than 15 minutes to fetch the packages list since
+#     the mirror server is in China
+#  2) apt repository format is subject to race conditions when a mirror is
+#     updated (http://askubuntu.com/a/160179)
 RUN sed -i 's/archive\.ubuntu\.com/mirrors.aliyun.com/g' /etc/apt/sources.list
 
 # pip CN mirror
@@ -18,5 +27,7 @@ RUN mkdir -p ~/pip && \
 
 # Google links CN mirror
 # Also replace "http://" with "//" to fix mixed-content issue on HTTPS pages
-RUN sed -i "s/http:\/\/fonts\.googleapis\.com/\/\/fonts.lug.ustc.edu.cn/g" `grep 'fonts\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
-RUN sed -i "s/http:\/\/ajax\.googleapis\.com/\/\/ajax.lug.ustc.edu.cn/g" `grep 'ajax\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
+RUN sed -i "s/http:\/\/fonts\.googleapis\.com/\/\/fonts.lug.ustc.edu.cn/g" \
+  `grep 'fonts\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
+RUN sed -i "s/http:\/\/ajax\.googleapis\.com/\/\/ajax.lug.ustc.edu.cn/g"
+  `grep 'ajax\.googleapis\.com' -rl /opt/odoo/sources/odoo/addons`
