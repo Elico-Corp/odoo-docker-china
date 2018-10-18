@@ -1,4 +1,4 @@
-FROM elicocorp/odoo:12.0
+FROM elicocorp/odoo
 MAINTAINER Elico Corp <webmaster@elico-corp.com>
 
 # Set OS timezone to China
